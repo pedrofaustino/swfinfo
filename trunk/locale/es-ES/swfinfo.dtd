@@ -1,0 +1,5 @@
+<!ENTITY swfinfo.label "SWF Info">
+<!ENTITY swfinfoSidebar.text.first "Este complemento necesita conexión a la Internet. Cuando estés online clica en la tab">
+<!ENTITY swfinfoSidebar.text.second "sobrepuesta en cada fichero SWF para obtener más información.">
+<!ENTITY openSwfinfoSidebar.commandkey "I">
+<!ENTITY openSwfinfoSidebar.modifierskey "accel shift">

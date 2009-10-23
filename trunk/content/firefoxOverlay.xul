@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is SWF Info.
+  -
+  - The Initial Developer of the Original Code is
+  - Pedro Faustino.
+  - Portions created by the Initial Developer are Copyright (C) 2009
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s):
+  -
+  - ***** END LICENSE BLOCK ***** -->
+
+<?xml-stylesheet href="chrome://swfinfo/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://swfinfo/locale/swfinfo.dtd">
+<overlay id="swfinfo-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="swfinfo-strings" src="chrome://swfinfo/locale/swfinfo.properties"/>
+  </stringbundleset>
+
+  <!-- Tools menu -->
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="swfinfo-hello" insertafter="devToolsSeparator" label="&swfinfo.label;" 
+              oncommand="swfinfo.onMenuItemCommand();"/>
+  </menupopup>
+  
+  <!-- View menu -->
+  <menupopup id="viewSidebarMenu">
+    <menuitem key="key_openSwfinfoSidebar" observes="viewSwfinfoSidebar"  />
+  </menupopup>
+  
+  <!-- Shortcut Keys (Ctrl + Shift + I) -->
+  <keyset id="mainKeyset">
+    <key id="key_openSwfinfoSidebar" command="viewSwfinfoSidebar"
+         key="&openSwfinfoSidebar.commandkey;" 
+         modifiers="&openSwfinfoSidebar.modifierskey;" />
+  </keyset>
+  
+  <!-- Event handler for UI elements -->
+  <broadcasterset id="mainBroadcasterSet"> 
+    <broadcaster id="viewSwfinfoSidebar" 
+                 label="&swfinfo.label;"
+                 autoCheck="false"
+                 type="checkbox"
+                 group="sidebar"
+                 sidebarurl="chrome://swfinfo/content/emptysidebar.xul"
+                 sidebartitle="&swfinfo.label;"
+                 oncommand="toggleSidebar('viewSwfinfoSidebar');" />
+  </broadcasterset>
+</overlay>

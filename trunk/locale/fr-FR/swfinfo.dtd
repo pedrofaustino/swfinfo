@@ -1,0 +1,5 @@
+<!ENTITY swfinfo.label "SWF Info">
+<!ENTITY swfinfoSidebar.text.first "Ce module a besoin de connectivité à l'internet. Une fois online cliquez dans l'onglet">
+<!ENTITY swfinfoSidebar.text.second "couvrant chaque SWF pour obtenir plus d'information.">
+<!ENTITY openSwfinfoSidebar.commandkey "I">
+<!ENTITY openSwfinfoSidebar.modifierskey "accel shift">
