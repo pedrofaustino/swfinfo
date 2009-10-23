@@ -1,0 +1,10 @@
+content	swfinfo	jar:chrome/swfinfo.jar!/content/
+
+locale	swfinfo	en-US 	jar:chrome/swfinfo.jar!/locale/en-US/ 
+locale	swfinfo	pt-PT 	jar:chrome/swfinfo.jar!/locale/pt-PT/
+locale	swfinfo	es-ES 	jar:chrome/swfinfo.jar!/locale/es-ES/
+locale	swfinfo	fr-FR 	jar:chrome/swfinfo.jar!/locale/fr-FR/
+
+skin	swfinfo	classic/1.0	jar:chrome/swfinfo.jar!/skin/
+
+overlay	chrome://browser/content/browser.xul	chrome://swfinfo/content/firefoxOverlay.xul

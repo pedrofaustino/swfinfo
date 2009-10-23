@@ -1,0 +1,5 @@
+<!ENTITY swfinfo.label "SWF Info">
+<!ENTITY swfinfoSidebar.text.first "This add-on requires internet connectivity. Once you're back online click in the tab">
+<!ENTITY swfinfoSidebar.text.second "overlaying each SWF file to access its info.">
+<!ENTITY openSwfinfoSidebar.commandkey "I">
+<!ENTITY openSwfinfoSidebar.modifierskey "accel shift">

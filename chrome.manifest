@@ -1,0 +1,10 @@
+content	swfinfo	content/
+
+locale	swfinfo	en-US locale/en-US/ 
+locale	swfinfo	pt-PT locale/pt-PT/
+locale	swfinfo	es-ES locale/es-ES/
+locale	swfinfo	fr-FR locale/fr-FR/
+
+skin	swfinfo	classic/1.0	skin/
+
+overlay	chrome://browser/content/browser.xul	chrome://swfinfo/content/firefoxOverlay.xul
