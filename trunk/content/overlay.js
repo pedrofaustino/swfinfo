@@ -78,7 +78,7 @@ var swfinfo = {
 		var appcontent = document.getElementById('appcontent');   // browser
 		if (appcontent)
 		{
-			appcontent.addEventListener('load', 
+			appcontent.addEventListener('DOMContentLoaded', 
 				function (aLoadEvent) { 
 					swfinfo.addSwfTab(aLoadEvent);
 				}, 
@@ -298,36 +298,33 @@ var swfinfo = {
 			wmode = object.getAttribute('wmode')
 		}
 		
-		// in case wmode=window or not set display the tab at the bottom left and outside of the SWF
-		if (!(wmode === 'opaque' || wmode === 'transparent')) {
-			var objectRect = object.getBoundingClientRect();
-			var tabRect = objTab.getBoundingClientRect();
-			offsetLeft = objectRect.left - tabRect.left;
-			offsetTop = objectRect.top - tabRect.bottom;
-		} 
-		else {
-			var firstrun = true;
-			while (object) {
-				offsetLeft += object.offsetLeft;
-				offsetTop += object.offsetTop;
-				
-				var position = object.ownerDocument.defaultView.getComputedStyle(object, null).getPropertyValue('position');
-				if (position !== 'static')
+		var firstrun = true;
+		while (object) {
+			offsetLeft += object.offsetLeft;
+			offsetTop += object.offsetTop;
+			
+			var position = object.ownerDocument.defaultView.getComputedStyle(object, null).getPropertyValue('position');
+			if (position !== 'static')
+			{
+				if (position === 'absolute')
 				{
-					if (position === 'absolute')
-					{
-						break;
-					}
-					if (firstrun && position === 'relative')
-					{
-						offsetLeft -= object.offsetLeft;
-						offsetTop -= object.offsetTop;
-						break;
-					}
-					firstrun = false;
+					break;
 				}
-				object = object.offsetParent;
+				if (firstrun && position === 'relative')
+				{
+					offsetLeft -= object.offsetLeft;
+					offsetTop -= object.offsetTop;
+					break;
+				}
+				firstrun = false;
 			}
+			object = object.offsetParent;
+		}
+		
+		// in case wmode = window (or not set) the stacking order is not respected, 
+		// thus display the tab at the bottom left and outside of the SWF area
+		if (!(wmode === 'opaque' || wmode === 'transparent')) {
+			offsetTop += (parseInt(aObjTab.previousSibling.height, 10) || 0);
 		}
 		
 		aObjTab.style.setProperty('left', offsetLeft + 'px', 'important');
@@ -342,9 +339,10 @@ var swfinfo = {
 	updateSidebar: function (aSwfUrl) {
 		var baseUrl = 'http://software.pedrofaustino.com/swfinfo/sidebar/index.html?url=';
 		var eventType = 'swfInfoNewUrl';
-		toggleSidebar('viewSwfinfoSidebar', true);
+		var browserWindow = getTopWin();
+		browserWindow.toggleSidebar('viewSwfinfoSidebar', true);
 		// See https://developer.mozilla.org/En/Code_snippets/Sidebar
-		var sidebarWindow = document.getElementById('sidebar').contentWindow;
+		var sidebarWindow = browserWindow.document.getElementById('sidebar').contentWindow;
 		if (sidebarWindow.location.href.match(/^http:\/\/software\.pedrofaustino\.com.*/))
 		{
 			var sidebarDoc = document.getElementById('sidebar').contentDocument;
@@ -361,8 +359,7 @@ var swfinfo = {
 	  
 };
 
-// see https://developer.mozilla.org/En/Code_snippets/On_page_load
-window.addEventListener('load', 
+window.addEventListener('DOMContentLoaded', 
 	function () { 
 		swfinfo.init(); 
 	}, 
