@@ -130,12 +130,10 @@ var swfinfo = {
 	/**
 	 * Executed when there's an unload event
 	 */
-	onPageUnload: function (aEvent)
+	onPageUnload: function ()
 	{
-		if (aEvent.originalTarget instanceof HTMLDocument) {
-			var doc = aEvent.originalTarget;
-			// do something
-		}
+		window.removeEventListener('load', swfinfo.init(), false);
+		window.removeEventListener('unload', swfinfo.onPageUnload(), false);
 	},
 	
 	/**
@@ -221,7 +219,7 @@ var swfinfo = {
 	{
 		var url = '';
 		var undef = 'undefined';
-		if (aObject.tagName.toUpperCase() === 'OBJECT')
+		if (aObject.tagName.toLowerCase() === 'object')
 		{
 			if (typeof aObject.data === undef || aObject.data === '') {
 				return null;
@@ -323,7 +321,7 @@ var swfinfo = {
 		
 		// in case wmode = window (or not set) the stacking order is not respected, 
 		// thus display the tab at the bottom left and outside of the SWF area
-		if (!(wmode === 'opaque' || wmode === 'transparent')) {
+		if (!(wmode.toLowerCase() === 'opaque' || wmode.toLowerCase() === 'transparent')) {
 			offsetTop += (parseInt(aObjTab.previousSibling.height, 10) || 0);
 		}
 		
@@ -359,14 +357,5 @@ var swfinfo = {
 	  
 };
 
-window.addEventListener('DOMContentLoaded', 
-	function () { 
-		swfinfo.init(); 
-	}, 
-	false);
-
-window.addEventListener('pagehide', 
-	function (aPagehideEvent) { 
-		swfinfo.onPageUnload(aPagehideEvent); 
-	}, 
-	false);
+window.addEventListener('load', swfinfo.init(), false);
+window.addEventListener('unload', swfinfo.onPageUnload(), false);
