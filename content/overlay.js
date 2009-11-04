@@ -78,7 +78,7 @@ var swfinfo = {
 		var appcontent = document.getElementById('appcontent');   // browser
 		if (appcontent)
 		{
-			appcontent.addEventListener('DOMContentLoaded', 
+			appcontent.addEventListener('load', 
 				function (aLoadEvent) { 
 					swfinfo.addSwfTab(aLoadEvent);
 				}, 
@@ -107,20 +107,29 @@ var swfinfo = {
 	 */
 	addSwfTab: function (aEvent)
 	{
-		// doc is document that triggered 'onload' event
-		var doc = aEvent.originalTarget;
-		if (doc.nodeName === '#document')
+		var originalDoc = aEvent.originalTarget;
+		if (originalDoc.nodeName === '#document')
 		{
-			// look for object and embed elements on the doc
-			var elementNames = ['object', 'embed'];
-			for (var j = 0; j < elementNames.length; j++)
+			var docs = new Array(originalDoc);
+			var j,k,i;
+			for (k = 0; k < originalDoc.getElementsByTagName('iframe').length; k++)
 			{
-				var objects = doc.body.getElementsByTagName(elementNames[j]);
-				for (var i = 0; i < objects.length; i++)
+				docs.push(originalDoc.getElementsByTagName('iframe')[k].contentDocument);
+			}
+
+			var elementNames = ['object', 'embed'];
+			
+			for (k = 0; k < docs.length; k++)
+			{
+				for (j = 0; j < elementNames.length; j++)
 				{
-					var objTab = objects[i].ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-					if (objTab) {
-						window.setTimeout(swfinfo.addObjectTab, 0, objects[i], objTab);
+					var objects = docs[k].body.getElementsByTagName(elementNames[j]);
+					for (i = 0; i < objects.length; i++)
+					{
+						var objTab = objects[i].ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+						if (objTab) {
+							window.setTimeout(swfinfo.addObjectTab, 0, objects[i], objTab);
+						}
 					}
 				}
 			}
@@ -357,5 +366,5 @@ var swfinfo = {
 	  
 };
 
-window.addEventListener('load', swfinfo.init(), false);
-window.addEventListener('unload', swfinfo.onPageUnload(), false);
+window.addEventListener('load', function () { swfinfo.init(); }, false);
+window.addEventListener('unload', function () { swfinfo.onPageUnload(); }, false);
