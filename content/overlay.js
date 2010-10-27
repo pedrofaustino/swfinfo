@@ -228,6 +228,14 @@ var swfinfo = {
 	{
 		var url = '';
 		var undef = 'undefined';
+		
+		// has this element the correct MIME type?
+		if(typeof aObject.type !== undef &&
+		    aObject.type.search('application/x-shockwave-flash') === -1 )
+		{
+		    return null;
+		}
+		
 		if (aObject.tagName.toLowerCase() === 'object')
 		{
 			if (typeof aObject.data === undef || aObject.data === '') {

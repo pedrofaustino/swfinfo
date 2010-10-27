@@ -6,7 +6,7 @@
 	<!-- Setting properties -->
 	<target name="version" description="Compute version number">
 	    <tstamp>
-			<format pattern="dMMyyyy" property="BUILD"/>
+			<format pattern="ddMMyyyy" property="BUILD"/>
 		</tstamp>
 		<property name="FULLVERSION" value="${VERSION}.${RELEASE}.${BUILD}"/>
         <property name="SWFINFO-XPI" value="${ant.project.name}-${FULLVERSION}.xpi"/>
