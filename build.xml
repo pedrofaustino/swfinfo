@@ -24,6 +24,7 @@
     <target name="clean">
         <delete dir="${build_dir}" />
         <delete dir="${dist_dir}" />
+        <delete file="${src_dir}/install.rdf" />
     </target>
 
     <!-- Expand templates -->
