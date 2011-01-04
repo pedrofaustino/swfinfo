@@ -50,6 +50,17 @@ var swfinfo = {
 	 */
 	collapsedClass: null,
 	
+	httpRequestObserver: 
+  {
+    observe: function(subject, topic, data) 
+    {
+      if (topic == "http-on-modify-request") {
+        var httpChannel = subject.QueryInterface(Components.interfaces.nsIHttpChannel);
+        httpChannel.setRequestHeader("X-Hello", "World", false);
+      }
+    }
+  },
+	
 	/**
 	 * init() function
 	 */
@@ -89,6 +100,10 @@ var swfinfo = {
 				}, 
 				false);
 		}
+		
+    var observerService = Components.classes["@mozilla.org/observer-service;1"]
+                                    .getService(Components.interfaces.nsIObserverService);
+    observerService.addObserver(this.httpRequestObserver, "http-on-modify-request", false);
 	},
 	
 	/**
@@ -143,6 +158,10 @@ var swfinfo = {
 	{
 		window.removeEventListener('load', swfinfo.init(), false);
 		window.removeEventListener('unload', swfinfo.onPageUnload(), false);
+		
+		var observerService = Components.classes["@mozilla.org/observer-service;1"]
+                                    .getService(Components.interfaces.nsIObserverService);
+		observerService.removeObserver(this.httpRequestObserver, "http-on-modify-request");
 	},
 	
 	/**
