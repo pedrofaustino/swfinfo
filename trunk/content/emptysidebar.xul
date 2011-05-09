@@ -7,7 +7,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
   <script>
     if(navigator.onLine) 
-		window.location.replace('http://software.pedrofaustino.com/swfinfo/sidebar/index.html');
+		window.location.replace('http://software.pedrofaustino.com/swfinfo/sidebar/index-with-flattr.html');
   </script>
   <vbox flex="1">
     <description>&swfinfoSidebar.text.first;<image src="chrome://swfinfo/skin/tab.png" style="width:57px; height:15px; margin: 2px 2px 0px 2px;"/>&swfinfoSidebar.text.second;</description>

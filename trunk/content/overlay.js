@@ -15,7 +15,7 @@
  *
  * The Initial Developer of the Original Code is
  * Pedro Faustino.
- * Portions created by the Initial Developer are Copyright (C) 2009
+ * Portions created by the Initial Developer are Copyright (C) 2009-2011
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -56,7 +56,23 @@ var swfinfo = {
     {
       if (topic == "http-on-modify-request") {
         var httpChannel = subject.QueryInterface(Components.interfaces.nsIHttpChannel);
-        httpChannel.setRequestHeader("X-Hello", "World", false);
+        
+        if (httpChannel.referrer != null && /software.pedrofaustino.com/.test(httpChannel.referrer.host)) {
+
+	        var url = subject.URI.spec; /* url being requested */
+	        
+	        var mainWindow = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+	                       .getInterface(Components.interfaces.nsIWebNavigation)
+	                       .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+	                       .rootTreeItem
+	                       .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+	                       .getInterface(Components.interfaces.nsIDOMWindow);
+			
+			if( url.match(/^https:\/\/(api\.)?flattr\.com.*/) || url.match(/^https:\/\/code\.google\.com.*/) ) {
+				mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(url);
+				httpChannel.cancel(Components.results.NS_BINDING_SUCCEEDED);
+			}
+		}
       }
     }
   },
@@ -104,17 +120,6 @@ var swfinfo = {
     var observerService = Components.classes["@mozilla.org/observer-service;1"]
                                     .getService(Components.interfaces.nsIObserverService);
     observerService.addObserver(this.httpRequestObserver, "http-on-modify-request", false);
-	},
-	
-	/**
-	 * Executed when the user clicks on Tools
-	 */
-	onMenuItemCommand: function ()
-	{
-		var extensionManager = Components.classes['@mozilla.org/extensions/manager;1'].
-			getService(Components.interfaces.nsIExtensionManager);
-		openDialog('chrome://mozapps/content/extensions/about.xul', '',
-			'chrome,centerscreen,modal', 'urn:mozilla:item:swfinfo@software.pedrofaustino.com', extensionManager.datasource);
 	},
 	
 	/**
@@ -371,7 +376,7 @@ var swfinfo = {
 	 * or in case it's already visible creates a new SWF URL change event to be caught by the webpage
 	 */
 	updateSidebar: function (aSwfUrl) {
-		var baseUrl = 'http://software.pedrofaustino.com/swfinfo/sidebar/index.html?url=';
+		var baseUrl = 'http://software.pedrofaustino.com/swfinfo/sidebar/index-with-flattr.html?url=';
 		var eventType = 'swfInfoNewUrl';
 		var browserWindow = getTopWin();
 		browserWindow.toggleSidebar('viewSwfinfoSidebar', true);

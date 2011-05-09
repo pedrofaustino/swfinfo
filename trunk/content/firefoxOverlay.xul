@@ -29,14 +29,22 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="overlay.js"/>
   
+  <commandset id="mainCommandSet">
+    <command id="cmd_toggleSwfInfo" oncommand="toggleSidebar('viewSwfinfoSidebar')"/>
+  </commandset>
+  
   <stringbundleset id="stringbundleset">
     <stringbundle id="swfinfo-strings" src="chrome://swfinfo/locale/swfinfo.properties"/>
   </stringbundleset>
 
   <!-- Tools menu -->
   <menupopup id="menu_ToolsPopup">
-    <menuitem id="swfinfo-hello" insertafter="devToolsSeparator" label="&swfinfo.label;" 
-              oncommand="swfinfo.onMenuItemCommand();"/>
+    <menuitem id="swfInfo" insertbefore="javascriptConsole" label="&swfinfo.label;" key="key_openSwfinfoSidebar" command="cmd_toggleSwfInfo" />
+  </menupopup>
+  
+  <!-- Firefox 4 Web Developer menu -->
+  <menupopup id="appmenu_webDeveloper_popup">
+    <menuitem id="swfInfo" insertbefore="appmenu_webConsole" label="&swfinfo.label;" key="key_openSwfinfoSidebar" command="cmd_toggleSwfInfo" />
   </menupopup>
   
   <!-- View menu -->
