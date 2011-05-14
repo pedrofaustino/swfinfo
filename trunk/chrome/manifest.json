@@ -1,0 +1,16 @@
+{
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "nyroModal.css" ],
+      "js": [ "jquery-1.4.min.js", "jquery.nyroModal-1.5.5.min.js", "swfInfo.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   } ],
+   "description": "SWF Info is the best tool out there",
+   "icons": {
+      "128": "swfInfo-128.png",
+      "48": "swfInfo-48.png"
+   },
+   "name": "SWF Info",
+   "version": "0.1"
+}
